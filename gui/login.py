@@ -38,14 +38,14 @@ user_name_label.grid(row=2, column=0)
 passw_label = Label(root, text="Enter your password.")
 passw_label.grid(row=2, column=1)
 
-testuserinput = user_name.get()
-print(testuserinput)
-
 #a function dedicated to starting the process with retrieving the inputted data from the entry boxes and database
 def retrievingdata():
   #gets the input from the username entry box and password entry box
   userinput = user_name.get()
   passinput = passw.get()
+
+  global extrauser
+  extrauser = userinput
 
   #creates the table in case it wasn't already
   cursor.execute(''' CREATE TABLE IF NOT EXISTS logindata
@@ -86,7 +86,11 @@ def loggingin(retrieveddata, passinput, userinput):
       # imports the final gui file if the password is the same as the database. the user is officially logged in.
 
       time = datetime.now()
-      current_time = time.strftime("%Y-%m-%d %H:%M:%S %Z%z")
+      current_hour = time.strftime("%H")
+      hourint = int(current_hour) - 5
+      if hourint < 0:
+        hourint = 24 + hourint
+      current_time = time.strftime(f"%Y-%m-%d {hourint}:%M:%S %Z%z")
 
       openFile = open(f"{userinput}.txt","a")
       
@@ -106,7 +110,7 @@ def loggingin(retrieveddata, passinput, userinput):
   else:
     messagebox.showerror("Oops!", "Such user does not exist!")
     root.destroy()
-    import main.py
+    import main
 
 
 # the submit button calls the retrievingdata function. It essentially submits the entry data.
