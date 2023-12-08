@@ -91,7 +91,11 @@ def signingin():
   openFile = open(f"{usernamefin}.txt","a")
   
   time = datetime.now()
-  current_time = time.strftime("%Y-%m-%d %H:%M:%S %Z%z")
+  current_hour = time.strftime("%H")
+  hourint = int(current_hour) - 5
+  if hourint < 0:
+    hourint = 24 + hourint
+  current_time = time.strftime(f"%Y-%m-%d {hourint}:%M:%S %Z%z")
   
   with open(f"{usernamefin}.txt", 'at') as f:
     f.write(f"{usernamefin} created account at " + current_time + "\n")
