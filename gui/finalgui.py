@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter.ttk import *
 from tkinter import *
 #import requests
-from login import testuserinput
+from login import extrauser
 # from tkvideo import tkvideo
 
 from datetime import datetime
@@ -15,18 +15,26 @@ def movement(direction):
   #url = "http://192.168.1.25:5000"
   #requests.post(url, json={'command': direction})
   time = datetime.now()
-  current_time = time.strftime("%Y-%m-%d %H:%M:%S %Z%z")
-  with open('logText.txt', 'at') as f:
-    f.write(f"{direction} at " + current_time + "\n")
+  current_hour = time.strftime("%H")
+  hourint = int(current_hour) - 5
+  if hourint < 0:
+    hourint = 24 + hourint
+  current_time = time.strftime(f"%Y-%m-%d {hourint}:%M:%S %Z%z")
+  with open(f'{extrauser}.txt', 'at') as f:
+    f.write(f"{extrauser} pressed {direction} at " + current_time + "\n")
     f.close()
 
 
-def logout(testuserinput):
+def logout():
   fen.destroy()
   time = datetime.now()
-  current_time = time.strftime("%Y-%m-%d %H:%M:%S %Z%z")
-  with open('logText.txt', 'at') as f:
-    f.write(f"{testuserinput} has logged out at " + current_time + "\n")
+  current_hour = time.strftime("%H")
+  hourint = int(current_hour) - 5
+  if hourint < 0:
+    hourint = 24 + hourint
+  current_time = time.strftime(f"%Y-%m-%d {hourint}:%M:%S %Z%z")
+  with open(f'{extrauser}.txt', 'at') as f:
+    f.write(f"{extrauser} has logged out at " + current_time + "\n")
     f.close()
 
 
@@ -62,8 +70,10 @@ leftbutton.grid(row=5, column=5, pady=3, padx=3)
 # a custom button
 stopbutton = Button(right,text="STOP",width=5,command=lambda: movement("stop"))
 stopbutton.grid(row=5, column=6, padx=3, pady=3)
-logoutbutton = Button(right, text="Logout", width=5, command=lambda: logout(testuserinput))
-logoutbutton.grid(row=7, column=6, pady=27)
+logoutbutton = Button(right, text="Logout", width=5, command=lambda: logout())
+logoutbutton.grid(row=7, column=5, pady=27)
+demobutton = Button(right, text="Demo", width=5, command=lambda: movement("demo"))
+demobutton.grid(row=7, column=7, pady=27)
 
 #BOTTOM LEFT
 bleft = tk.Frame(fen, bg="grey", width=200, height=200)
@@ -77,7 +87,7 @@ import tkinter as tk
 
 def update_log_label():
     try:
-        with open("logText.txt", "r") as file:
+        with open(f"{extrauser}.txt", "r") as file:
             log_content = file.read()
             log_label.config(text=log_content)
     except FileNotFoundError:
