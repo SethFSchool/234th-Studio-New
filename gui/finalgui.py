@@ -2,7 +2,7 @@
 import tkinter as tk
 from tkinter.ttk import *
 from tkinter import *
-#import requests
+import requests
 from login import extrauser
 # from tkvideo import tkvideo
 
@@ -12,8 +12,8 @@ import time
 fen = tk.Tk()
 
 def movement(direction):
-  #url = "http://192.168.1.25:5000"
-  #requests.post(url, json={'command': direction})
+  url = "http://192.168.1.25:5000"
+  requests.post(url, json={'command': direction})
   time = datetime.now()
   current_hour = time.strftime("%H")
   hourint = int(current_hour) - 5
@@ -67,11 +67,13 @@ rightbutton.grid(row=5, column=7, pady=3, padx=3)
 # a button for turning left
 leftbutton = Button(right, text="←", width=3, command=lambda: movement("left"))
 leftbutton.grid(row=5, column=5, pady=3, padx=3)
-# a custom button
+# a stop button
 stopbutton = Button(right,text="STOP",width=5,command=lambda: movement("stop"))
 stopbutton.grid(row=5, column=6, padx=3, pady=3)
+# a log out button
 logoutbutton = Button(right, text="Logout", width=5, command=lambda: logout())
 logoutbutton.grid(row=7, column=5, pady=27)
+# a custom button
 demobutton = Button(right, text="Demo", width=5, command=lambda: movement("demo"))
 demobutton.grid(row=7, column=7, pady=27)
 
