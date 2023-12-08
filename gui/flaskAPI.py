@@ -22,6 +22,8 @@ def control():
         right(0.85)
     elif command == 'stop':
         stop()
+    elif command == 'demo':
+        demo()
     else:
         return jsonify({'status': 'error', 'message': 'Invalid command'})
 
@@ -58,6 +60,20 @@ def right(time):
 def stop():
     kit.motor1.throttle = 0.0
     kit.motor2.throttle = 0.0
+
+def demo():
+  kit.motor1.throttle=0.8
+  kit.motor2.throttle=-0.8
+  time.sleep(4)
+  kit.motor1.throttle=0.8
+  kit.motor2.throttle=0.8
+  time.sleep(1)
+  kit.motor1.throttle=0.8
+  kit.motor2.throttle=-0.8
+  time.sleep(4)
+  kit.motor1.throttle=-0.8
+  kit.motor2.throttle=-0.8
+  time.sleep(1)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
