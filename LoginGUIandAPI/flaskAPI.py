@@ -29,8 +29,8 @@ def control():
 
 #These just move the motors.
 def forward():
-  kit.motor1.throttle=0.8
-  kit.motor2.throttle=-0.8
+    kit.motor1.throttle=0.8
+    kit.motor2.throttle=-0.8
 
 
 def backward():
